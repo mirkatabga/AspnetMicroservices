@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Services.Catalog.Catalog.API.Data;
 using Services.Catalog.Catalog.API.Repositories;
@@ -21,7 +22,10 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt => 
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo {Title = "Catalog.API", Version = "v1"});
+});
 
 var app = builder.Build();
 

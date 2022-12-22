@@ -73,7 +73,7 @@ namespace Services.Catalog.Catalog.API.Repositories
                                                 .DeleteOneAsync(filter);
 
             return deleteResult.IsAcknowledged
-                && deleteResult.DeletedCount > 0;
+                && deleteResult.DeletedCount > 0; 
         }
     }
 }
