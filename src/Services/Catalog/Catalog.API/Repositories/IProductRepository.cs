@@ -1,6 +1,6 @@
-using Services.Catalog.Catalog.API.Entities;
+using Catalog.API.Entities;
 
-namespace Services.Catalog.Catalog.API.Repositories
+namespace Catalog.API.Repositories
 {
     public interface IProductRepository
     {

@@ -1,7 +1,7 @@
 using MongoDB.Driver;
-using Services.Catalog.Catalog.API.Entities;
+using Catalog.API.Entities;
 
-namespace Services.Catalog.Catalog.API.Data
+namespace Catalog.API.Data
 {
     public class MongoDataSeeder : IDataSeeder
     {

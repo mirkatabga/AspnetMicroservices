@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using Services.Catalog.Catalog.API.Data;
-using Services.Catalog.Catalog.API.Repositories;
+using Catalog.API.Data;
+using Catalog.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

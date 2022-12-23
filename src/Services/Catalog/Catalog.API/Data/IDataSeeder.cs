@@ -1,4 +1,4 @@
-namespace Services.Catalog.Catalog.API.Data
+namespace Catalog.API.Data
 {
     public interface IDataSeeder
     {
