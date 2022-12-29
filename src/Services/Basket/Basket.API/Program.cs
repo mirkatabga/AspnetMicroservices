@@ -1,3 +1,4 @@
+using Basket.API.Repositories;
 using Microsoft.Extensions.Caching.StackExchangeRedis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddStackExchangeRedisCache(opt =>
      opt.Configuration = builder.Configuration.GetValue<string>(
         "DistributedCacheConfig:ConnectionString");
 });
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 var app = builder.Build();
 
