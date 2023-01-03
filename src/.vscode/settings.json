@@ -3,6 +3,9 @@
         "ASPNETCORE",
         "basketdb",
         "Bson",
-        "catalogdb"
+        "catalogdb",
+        "discountdb",
+        "dpage",
+        "pgadmin"
     ]
 }
