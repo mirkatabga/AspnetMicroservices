@@ -2,6 +2,7 @@ using System.Data;
 using Npgsql;
 using Microsoft.Extensions.Options;
 using Discount.API.Data;
+using Discount.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IDbConnection>(sp => 
 {
     string? connectionString = sp.GetRequiredService<IOptions<PostgresConfig>>().Value.ConnectionString;
-    
+
     return new NpgsqlConnection(connectionString);
 });
+
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
