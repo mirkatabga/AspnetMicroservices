@@ -5,12 +5,12 @@ using Discount.API.Data;
 using Discount.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<PostgresConfig>(builder.Configuration.GetSection(nameof(PostgresConfig)));
 
 // Add services to the container.
 builder.Services.AddTransient<IDbConnection>(sp => 
 {
     string? connectionString = sp.GetRequiredService<IOptions<PostgresConfig>>().Value.ConnectionString;
-
     return new NpgsqlConnection(connectionString);
 });
 
