@@ -6,6 +6,8 @@
         "catalogdb",
         "discountdb",
         "dpage",
-        "pgadmin"
+        "Npgsql",
+        "pgadmin",
+        "Swashbuckle"
     ]
 }
