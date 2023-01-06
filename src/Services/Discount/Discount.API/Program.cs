@@ -3,6 +3,7 @@ using Npgsql;
 using Microsoft.Extensions.Options;
 using Discount.API.Data;
 using Discount.API.Repositories;
+using Discount.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<PostgresConfig>(builder.Configuration.GetSection(nameof(PostgresConfig)));
@@ -22,6 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.MigrateDatabase<Program>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
