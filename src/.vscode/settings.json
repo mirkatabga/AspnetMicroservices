@@ -8,6 +8,9 @@
         "dpage",
         "Npgsql",
         "pgadmin",
+        "Proto",
+        "Protobuf",
+        "Protos",
         "Swashbuckle"
     ]
 }
