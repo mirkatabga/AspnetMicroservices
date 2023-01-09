@@ -1,3 +1,9 @@
+using System.Data;
+using Microsoft.Extensions.Options;
+using Npgsql;
+using Discount.Grpc.Data;
+using Discount.Grpc.Repositories;
+using Discount.Grpc.Extensions;
 using Discount.Grpc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
 
 // Add services to the container.
+builder.Services.Configure<PostgresConfig>(builder.Configuration.GetSection(nameof(PostgresConfig)));
+
+// Add services to the container.
+builder.Services.AddTransient<IDbConnection>(sp => 
+{
+    string? connectionString = sp.GetRequiredService<IOptions<PostgresConfig>>().Value.ConnectionString;
+    return new NpgsqlConnection(connectionString);
+});
+
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+
 builder.Services.AddGrpc();
 
 var app = builder.Build();
