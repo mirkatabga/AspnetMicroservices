@@ -1,3 +1,5 @@
+using Discount.API.Data;
+using Microsoft.Extensions.Options;
 using Npgsql;
 
 namespace Discount.API.Extensions
@@ -11,15 +13,14 @@ namespace Discount.API.Extensions
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var configuration = services.GetRequiredService<IConfiguration>();
+                string? connectionString = services.GetRequiredService<IOptions<PostgresConfig>>().Value.ConnectionString;
                 var logger = services.GetRequiredService<ILogger<TContext>>();
 
                 try
                 {
                     logger.LogInformation("Migrating postresql database.");
 
-                    using var connection = new NpgsqlConnection
-                        (configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+                    using var connection = new NpgsqlConnection(connectionString);
                     connection.Open();
 
                     using var command = new NpgsqlCommand
@@ -43,6 +44,8 @@ namespace Discount.API.Extensions
                     command.ExecuteNonQuery();
 
                     logger.LogInformation("Migrated postresql database.");
+
+                    connection.Close();
                 }
                 catch (NpgsqlException ex)
                 {
