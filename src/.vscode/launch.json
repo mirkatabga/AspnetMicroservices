@@ -11,13 +11,53 @@
             }
         },
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Catalog.API",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Services/Catalog/Catalog.API/bin/Debug/net6.0/Catalog.API.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Services/Catalog/Catalog.API",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Basket.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Services/Basket/Basket.API/bin/Debug/net6.0/Basket.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Services/Basket/Basket.API",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Discount.Grpc",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Services/Discount/Discount.Grpc/bin/Debug/net6.0/Discount.Grpc.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Services/Discount/Discount.Grpc",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
