@@ -6,6 +6,7 @@
         "catalogdb",
         "discountdb",
         "dpage",
+        "MediatR",
         "Npgsql",
         "pgadmin",
         "Proto",
