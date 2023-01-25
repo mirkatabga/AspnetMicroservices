@@ -8,7 +8,7 @@ namespace Ordering.Infrastructure.Persistence
     {
         private const string ORDERING_MICROSERVICE = "ordering microservice";
 
-        public OrderContext(DbContextOptions options) 
+        public OrderContext(DbContextOptions<OrderContext> options) 
             : base(options)
         {           
         }
