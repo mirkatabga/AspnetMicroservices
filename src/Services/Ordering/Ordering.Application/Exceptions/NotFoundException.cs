@@ -1,5 +1,3 @@
-using Ordering.Domain.Common;
-
 namespace Ordering.Application.Exceptions
 {
     public class NotFoundException : ApplicationException
