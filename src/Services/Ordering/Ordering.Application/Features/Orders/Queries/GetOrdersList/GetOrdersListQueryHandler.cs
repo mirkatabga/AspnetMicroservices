@@ -1,7 +1,6 @@
 using AutoMapper;
 using MediatR;
 using Ordering.Application.Contracts.Persistence;
-using Ordering.Domain.Entities;
 
 namespace Ordering.Application.Features.Orders.Queries.GetOrdersList
 {
@@ -17,10 +16,11 @@ namespace Ordering.Application.Features.Orders.Queries.GetOrdersList
             _mapper = mapper;
             _repo = repo;
         }
-        
+
         public async Task<List<OrderVm>> Handle(GetOrdersListQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _repo.GetAllAsync();
+            var orders = await _repo.GetAsync(
+                order => order.UserName == request.Username);
 
             return _mapper.Map<List<OrderVm>>(orders);
         }
