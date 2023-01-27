@@ -19,8 +19,7 @@ namespace Ordering.Application.Features.Orders.Queries.GetOrdersList
 
         public async Task<List<OrderVm>> Handle(GetOrdersListQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _repo.GetAsync(
-                order => order.UserName == request.Username);
+            var orders = await _repo.GetOrdersByUserName(request.Username);
 
             return _mapper.Map<List<OrderVm>>(orders);
         }
