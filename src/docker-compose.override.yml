@@ -38,6 +38,17 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin/
 
+  orderdb:
+    container_name: orderdb
+    environment:
+        SA_PASSWORD: "abrakadabra1!"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+    volumes:
+      - ordering_sqlserver_data:/var/opt/mssql
+
   portainer:
     container_name: portainer
     restart: always
@@ -89,3 +100,13 @@ services:
       - discountdb
     ports:
       - "8003:80"
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "InfrastructureConfig:PersistenceConfig:ConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=abrakadabra1!;TrustServerCertificate=True;"
+    depends_on:
+      - orderdb
+    ports:
+      - "8004:80"
