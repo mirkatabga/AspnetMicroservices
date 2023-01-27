@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddApplicationServices();
-    builder.Services.AddInfrastructureServices(builder.Configuration.GetSection(nameof(InfrastructureConfig)).Get<InfrastructureConfig>());
+    builder.Services.AddInfrastructureServices(GetInfrastructureConfig());
 }
 
 var app = builder.Build();
@@ -26,4 +26,11 @@ var app = builder.Build();
     app.UseAuthorization();
     app.MapControllers();
     app.Run();
+}
+
+InfrastructureConfig GetInfrastructureConfig()
+{
+    return builder.Configuration
+            .GetSection(nameof(InfrastructureConfig))
+            .Get<InfrastructureConfig>();
 }
