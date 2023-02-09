@@ -49,6 +49,13 @@ services:
     volumes:
       - ordering_sqlserver_data:/var/opt/mssql
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
   portainer:
     container_name: portainer
     restart: always
