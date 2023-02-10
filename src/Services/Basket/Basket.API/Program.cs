@@ -23,6 +23,8 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 builder.Services.AddMassTransit(config =>
     config.UsingRabbitMq((_, cfg) => cfg.Host(builder.Configuration["EventBusSettings:HostAddress"])));
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddScoped<DiscountGrpcService>();
 
 var app = builder.Build();

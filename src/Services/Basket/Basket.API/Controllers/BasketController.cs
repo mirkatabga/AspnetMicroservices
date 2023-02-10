@@ -3,6 +3,9 @@ using Basket.API.Entities;
 using Basket.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Basket.API.GrpcServices;
+using EventBus.Messages.Events;
+using AutoMapper;
+using MassTransit;
 
 namespace Basket.API.Controllers
 {
@@ -12,13 +15,19 @@ namespace Basket.API.Controllers
     {
         private readonly IBasketRepository _repo;
         private readonly DiscountGrpcService _discountService;
+        private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
 
         public BasketController(
             IBasketRepository repo,
-            DiscountGrpcService discountService)
+            DiscountGrpcService discountService,
+            IMapper mapper,
+            IPublishEndpoint publishEndpoint)
         {
             _repo = repo;
             _discountService = discountService;
+            _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet("{username}")]
@@ -45,7 +54,7 @@ namespace Basket.API.Controllers
 
                 item.Price -= coupon.Amount;
             }
-            
+
             var updatedBasket = await _repo.UpdateBasketAsync(basket);
 
             return Ok(updatedBasket);
@@ -58,6 +67,27 @@ namespace Basket.API.Controllers
             await _repo.DeleteBasketAsync(username);
 
             return Ok();
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        {
+            var basket = await _repo.GetBasketAsync(basketCheckout.UserName!);
+
+            if (basket is null)
+            {
+                return BadRequest();
+            }
+
+            var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+            eventMessage.TotalPrice = basket.TotalPrice;
+
+            await _publishEndpoint.Publish(eventMessage);
+            await _repo.DeleteBasketAsync(basket.Username!);
+
+            return Accepted();
         }
     }
 }
