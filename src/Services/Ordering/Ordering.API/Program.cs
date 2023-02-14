@@ -1,15 +1,16 @@
+using Ordering.API.EventBusConsumer;
 using Ordering.API.Extensions;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Ordering.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddEventBus(GetConfig<EventBusConfig>());
     builder.Services.AddSwaggerGen();
     builder.Services.AddApplicationServices();
-    builder.Services.AddInfrastructureServices(GetInfrastructureConfig());
+    builder.Services.AddInfrastructureServices(GetConfig<InfrastructureConfig>());
 }
 
 var app = builder.Build();
@@ -28,9 +29,9 @@ var app = builder.Build();
     app.Run();
 }
 
-InfrastructureConfig GetInfrastructureConfig()
+T GetConfig<T>() where T : class
 {
-    return builder.Configuration
-            .GetSection(nameof(InfrastructureConfig))
-            .Get<InfrastructureConfig>();
+    return builder!.Configuration
+            .GetSection(typeof(T).Name)
+            .Get<T>();
 }
