@@ -2,11 +2,11 @@ namespace EventBus.Messages.Events
 {
     public class BasketCheckoutEvent : IntegrationBaseEvent
     {
-        protected BasketCheckoutEvent()
+        public BasketCheckoutEvent()
         {
         }
 
-        protected BasketCheckoutEvent(Guid id, DateTime createdDate)
+        public BasketCheckoutEvent(Guid id, DateTime createdDate)
             : base(id, createdDate)
         {
         }

@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllers();
     builder.Services.AddEventBus(GetConfig<EventBusConfig>());
     builder.Services.AddSwaggerGen();
+    builder.Services.AddAutoMapper(typeof(Program));
     builder.Services.AddApplicationServices();
     builder.Services.AddInfrastructureServices(GetConfig<InfrastructureConfig>());
 }

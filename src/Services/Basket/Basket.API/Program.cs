@@ -21,7 +21,7 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     opt.Address = new Uri(builder.Configuration.GetValue<string>("DiscountGrpcConfig:Url")));
 
 builder.Services.AddMassTransit(config =>
-    config.UsingRabbitMq((_, cfg) => cfg.Host(builder.Configuration["EventBusSettings:HostAddress"])));
+    config.UsingRabbitMq((_, cfg) => cfg.Host(builder.Configuration["EventBusConfig:HostAddress"])));
 
 builder.Services.AddAutoMapper(typeof(Program));
 
