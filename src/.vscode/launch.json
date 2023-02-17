@@ -91,18 +91,24 @@
             }
         },
         {
-            "name": ".NET Core Attach",
+            "name": "OcelotApiGw",
             "type": "coreclr",
-            "request": "attach"
-        },
-        {
-            "name": "Docker .NET Core Launch",
-            "type": "docker",
             "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "netCore": {
-                "appProject": "${workspaceFolder}/Services/Basket/Basket.API/Basket.API.csproj"
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/ApiGateways/OcelotApiGw/bin/Debug/net6.0/OcelotApiGw.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/ApiGateways/OcelotApiGw",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Local"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
             }
-        }
+        },
     ]
 }
